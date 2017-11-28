@@ -2,7 +2,7 @@ properties([
   buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '7', numToKeepStr: '7'))
 ])
 
-def publishable_branches = ["development", "master"]
+def publishable_branches = ["development", "master", "upgrade-kafka"]
 def deployable_branches = ["development"]
 
 node('docker') {
@@ -46,13 +46,14 @@ if (publishable_branches.contains(env.BRANCH_NAME)) {
       try {
         dir('devicehive-docker'){
           echo("Clone Docker Compose files")
-          git branch: 'development', url: 'https://github.com/devicehive/devicehive-docker.git', depth: 1
+          git branch: 'upgrade-kafka', url: 'https://github.com/devicehive/devicehive-docker.git', depth: 1
         }
 
         dir('devicehive-docker/rdbms-image'){
           writeFile file: '.env', text: """COMPOSE_FILE=docker-compose.yml:ci-images.yml
           DH_TAG=${BRANCH_NAME}
           JWT_SECRET=devicehive
+          SPRING_PROFILES_ACTIVE=ws-kafka-proxy
           """
 
           echo("Start DeviceHive")
