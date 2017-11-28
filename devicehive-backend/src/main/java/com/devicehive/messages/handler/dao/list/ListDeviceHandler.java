@@ -21,6 +21,7 @@ package com.devicehive.messages.handler.dao.list;
  */
 
 import com.devicehive.dao.DeviceDao;
+import com.devicehive.model.enums.SortOrder;
 import com.devicehive.model.rpc.ListDeviceRequest;
 import com.devicehive.model.rpc.ListDeviceResponse;
 import com.devicehive.shim.api.Request;
@@ -47,8 +48,10 @@ public class ListDeviceHandler implements RequestHandler {
 
         final ListDeviceRequest req = (ListDeviceRequest) request.getBody();
 
+        final boolean sortOrderAsc = SortOrder.parse(req.isSortOrderAsc());
+
         final List<DeviceVO> devices = deviceDao.list(req.getName(), req.getNamePattern(), req.getNetworkId(),
-                req.getNetworkName(), req.getSortField(), req.isSortOrderAsc(), req.getTake(), req.getSkip(),
+                req.getNetworkName(), req.getSortField(), sortOrderAsc, req.getTake(), req.getSkip(),
                 req.getPrincipal());
 
         return Response.newBuilder()

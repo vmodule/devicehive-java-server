@@ -21,7 +21,6 @@ package com.devicehive.model.rpc;
  */
 
 import com.devicehive.auth.HivePrincipal;
-import com.devicehive.model.enums.SortOrder;
 import com.devicehive.shim.api.Action;
 import com.devicehive.shim.api.Body;
 import com.google.gson.GsonBuilder;
@@ -119,8 +118,8 @@ public class ListDeviceRequest extends Body {
         this.sortOrder = sortOrder;
     }
 
-    public boolean isSortOrderAsc() {
-        return SortOrder.parse(sortOrder);
+    public String isSortOrderAsc() {
+        return sortOrder;
     }
 
     public Integer getTake() {
