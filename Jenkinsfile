@@ -88,7 +88,7 @@ if (publishable_branches.contains(env.BRANCH_NAME)) {
             jq ".server.ip = \\"127.0.0.1\\"" | \\
             jq ".server.port = \\"80\\"" | \\
             jq ".server.restUrl = \\"http://127.0.0.1/api/rest\\"" | \\
-            jq ".server.authRestUrl = \\"http://127.0.0.1/auth/rest\\"" > config.json
+            jq ".server.authRestUrl = \\"http://127.0.0.1/api/rest\\"" > config.json
           '''
 
           timeout(time:10, unit: 'MINUTES') {
